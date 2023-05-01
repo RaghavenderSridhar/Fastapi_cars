@@ -21,7 +21,7 @@ def get_cars(number: Optional[str] = Query("10", max_length=3)):
         response.append(to_add)
     return response
 
-@app.get("/cars/{id}", response_class=Car)
+@app.get("/cars/{id}", response_model= Car)
 def get_car_by_id(id: int = Path(...,ge=0,lt=1000)):
     car = cars.get(id)
     if not car:
@@ -39,7 +39,7 @@ def add_cars(body_cars : List[Car], min_id: Optional[int] = Body(0)):
         cars[min_id] = car
         min_id += 1
         
-@app.put("/cars/{id}", response_class=Dict[str, Car] )    
+@app.put("/cars/{id}", response_model=Dict[str, Car] )    
 def update_car(id: int, car: Car = Body(...)):
     stored = cars.get(id)
     if not stored:
